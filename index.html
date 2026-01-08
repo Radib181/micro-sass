@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageText Pro - OCR SaaS Platform</title>
+    
+    <!-- External Libraries -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tesseract.js v2 (Fixed version with better initialization) -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@v2/dist/tesseract.min.js"></script>
+    
+    <!-- Local Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <!-- Local Scripts -->
+    <script src="utils.js"></script>
+    <script src="ocr-service.js"></script>
+    <script type="text/babel" src="app.js"></script>
+</body>
+</html>
+
+
+    const size = Math.random() * 20 + 10;
+    stars.push({ x, y: 0, size, color: 'gold' });
+}
+
+// Draw player
+function drawPlayer() {
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+}
+
+// Draw stars
+function drawStars() {
+    stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size / 2, 0, Math.PI * 2);
+        ctx.fillStyle = star.color;
+        ctx.fill();
+        ctx.closePath();
+    });
+}
+
+// Update stars
+function updateStars() {
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].y += 4;
+
+        // Collision detection
+        if (
+            stars[i].x < player.x + player.width &&
+            stars[i].x + stars[i].size > player.x &&
+            stars[i].y < player.y + player.height &&
+            stars[i].y + stars[i].size > player.y
+        ) {
+            score++;
+            stars.splice(i, 1);
+            i--;
+        } else if (stars[i].y > canvas.height) {
+            gameOver = true;
+        }
+    }
+}
+
+// Draw score
+function drawScore() {
+    ctx.fillStyle = '#333';
+    ctx.font = '20px Arial';
+    ctx.fillText('Score: ' + score, 10, 30);
+}
+
+// Game loop
+function gameLoop() {
+    if (gameOver) {
+        ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'white';
+        ctx.font = '30px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Game Over! Score: ' + score, canvas.width / 2, canvas.height / 2);
+        return;
+
+</body>
+</html>
